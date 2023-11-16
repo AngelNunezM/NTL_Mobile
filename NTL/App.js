@@ -17,7 +17,6 @@ const Stack = createStackNavigator()
 function MyStack(){
   return(
     <Stack.Navigator>
-     
       <Stack.Screen name={'HomeAuth'} component={HomeAuthView} options={{headerShown:false}}/>
       <Stack.Screen name={'Login'} component={LoginView} options={{headerShown:false}}/>
       <Stack.Screen name={'PasswordReintent'} component={Password} options={{headerShown:false}}/>

@@ -21,7 +21,8 @@ const CursosProvider = ({children}) => {
         <CursoContext.Provider
         value={
             {
-               cursos
+               cursos,
+               
             }
         }
         >{children}</CursoContext.Provider>
