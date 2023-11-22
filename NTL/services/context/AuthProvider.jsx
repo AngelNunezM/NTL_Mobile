@@ -6,7 +6,7 @@ const AuthContext = React.createContext();
 
 const AuthProvider = ({children}) =>{
     
-   const [authenticate, setAuthenticate] = useState(false)
+   const [authenticate, setAuthenticate] = useState(true)
     
     return(
         

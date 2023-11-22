@@ -7,7 +7,15 @@ export default function CourseCard({navigation, direction, title, subtitle, teac
     const {usuarios} = useCursos();
 
     return (
-    <TouchableOpacity onPress={() => {navigation.navigate('DetailCourse',{identificador:identificador})}}>
+    <TouchableOpacity onPress={() => {navigation.navigate(direction,
+    {
+        ident:identificador,
+        title:title,
+        price:price,
+        subtitle:subtitle,
+        teacher:teacher
+    }
+    )}}>
         <View style={styles.containerCard}>
         <View style={styles.viewImage}>
         </View>

@@ -1,9 +1,16 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CourseCardLong({navigation, direction, price, subtitle, title, teacher}) {
+export default function CourseCardLong({navigation, direction, price, subtitle, title, teacher, identificador}) {
   return (
-    <TouchableOpacity onPress={() => {navigation.navigate(direction)}}>
+    <TouchableOpacity onPress={() => {navigation.navigate(direction,
+    {
+        ident:identificador,
+        title:title,
+        price:price,
+        subtitle:subtitle,
+    }
+    )}}>
         <View style={styles.containerCard}>
             <View style={styles.viewImage}>
                 

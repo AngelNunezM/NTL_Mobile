@@ -31,9 +31,9 @@ export default function Home({navigation}) {
           <ScrollView 
           style={styles.scrollPrincipal}
           showsVerticalScrollIndicator={false}>
-          <CardWelcome 
-          navigation={navigation}/>
-            <Text style={styles.textBody}>Todos los cursos</Text>
+            <CardWelcome 
+            navigation={navigation}/>
+            <Text style={styles.textBody}>Cursos Gratuitos</Text>
             <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}

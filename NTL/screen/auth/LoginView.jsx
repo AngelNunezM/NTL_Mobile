@@ -6,6 +6,7 @@ import InputForm from '../../components/Inputs/InputForm';
 
 export default function LoginView({navigation}) {
  
+  
   return (
       <KeyboardAvoidingView 
       style={styles.container}

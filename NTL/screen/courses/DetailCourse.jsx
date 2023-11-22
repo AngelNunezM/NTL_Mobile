@@ -4,19 +4,23 @@ import CardHeaderTitle from '../../components/Cards/CardHeaderTitle';
 import FlatSection from '../../components/flatList/FlatSection';
 
 
-export default function DetailCourse({navigation, identicador}) {
+export default function DetailCourse({navigation, route}) {
 
-  return (
+    const {ident, title, subtitle, price, teacher } = route.params
+    return (
     <View>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
-
+                <Text>{ident}</Text>
             </View>
             <View style={styles.containerCard}>
                 <CardHeaderTitle 
-                navigation={navigation} />
+                navigation={navigation} 
+                title={title} 
+                subtitle={subtitle}
+                price={price}/>
                 <View style={{marginBottom:20}}>
-                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}>{identicador} Lo que aprenderas:</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}> Lo que aprenderas:</Text>
                     <View>
                         <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Instalacion de Android studio en cualquier entorno</Text>
                         <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Utilizar buenas practicas en el desarrollo movil </Text>

@@ -10,11 +10,11 @@ const CursosProvider = ({children}) => {
     
     
     const getCursos = () => {
-            axios.get('http://192.168.20.127:9000/api/Cursos')
+            axios.get('http://192.168.137.129:9000/api/Cursos')
             .then((response) => {setCursos(response.data)})       
     }
     const getUsuarios = () => {
-            axios.get('http://192.168.20.127:9000/api/Usuarios')
+            axios.get('http://192.168.137.129:9000/api/Usuarios')
             .then((response) => {setUsuarios(response.data)})       
     }
 
