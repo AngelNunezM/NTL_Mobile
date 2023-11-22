@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CourseCardLong({navigation, direction, price = '200.00 MXN'}) {
+export default function CourseCardLong({navigation, direction, price, subtitle, title, teacher}) {
   return (
     <TouchableOpacity onPress={() => {navigation.navigate(direction)}}>
         <View style={styles.containerCard}>
@@ -9,10 +9,10 @@ export default function CourseCardLong({navigation, direction, price = '200.00 M
                 
             </View>
             <View>
-                <Text style={styles.textTitle}>Android Studio: DESDE CERO</Text>
-                <Text style={styles.textDescription}>Aprende  utilzar el IDE mas usado para el desarrollo movil</Text>
+                <Text style={styles.textTitle}>{title} </Text>
+                <Text style={styles.textDescription}>{subtitle} </Text>
                 <Text style={styles.textImparted}>Impartido por: 
-                    <Text style={styles.textTeacher}> Marco Huitron</Text>
+                    <Text style={styles.textTeacher}>{teacher}</Text>
                 </Text>
                 <View style={styles.viewPrice}>
                     <Text style={styles.textPrice}>{price}</Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     viewImage:{
         width:100,
         marginRight:10,
-        backgroundColor:'#8578b0',
+        backgroundColor:'rgb(99 102 241)',
         borderRadius:2,
         height:100,
         marginBottom:2,

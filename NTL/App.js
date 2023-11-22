@@ -11,6 +11,7 @@ import MyCourse from './screen/courses/MyCourse';
 import { BottomTab } from './screen/BottomTab';
 import Profile from './screen/Profile';
 import {CursosProvider} from './services/context/CursosProvider';
+import { AuthProvider } from './services/context/AuthProvider';
 
 const Stack = createStackNavigator() 
 
@@ -32,12 +33,14 @@ function MyStack(){
 }
 
 export default function App() {
-  return (
-      <CursosProvider>
+  return (  
         <NavigationContainer>
-          <MyStack />
+          <AuthProvider>
+            <CursosProvider>
+              <MyStack />
+            </CursosProvider>
+          </AuthProvider>
         </NavigationContainer>
-      </CursosProvider>
   );
 }
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const CursoContext = React.createContext();
@@ -5,24 +6,29 @@ const CursoContext = React.createContext();
 const CursosProvider = ({children}) => {
 
     const [cursos, setCursos] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
     
-    const getCursos = async () => {
-        const response = await fetch('http://localhost:9000/api/Cursos')
-        const cursosJson = await response.json();
-        setCursos(cursosJson);
+    
+    const getCursos = () => {
+            axios.get('http://192.168.20.127:9000/api/Cursos')
+            .then((response) => {setCursos(response.data)})       
     }
+    const getUsuarios = () => {
+            axios.get('http://192.168.20.127:9000/api/Usuarios')
+            .then((response) => {setUsuarios(response.data)})       
+    }
+
     useEffect(() => {
         getCursos()
+        getUsuarios()
     },[])
-    
-   
     
     return(
         <CursoContext.Provider
         value={
             {
-               cursos,
-               
+               cursos,  
+               usuarios
             }
         }
         >{children}</CursoContext.Provider>

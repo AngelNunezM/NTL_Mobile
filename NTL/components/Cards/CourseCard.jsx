@@ -1,27 +1,36 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import useCursos from '../../hooks/useCursos';
 
-export default function CourseCard({navigation, direction, name = "hola"}) {
+export default function CourseCard({navigation, direction, title, subtitle, teacher, price, identificador}) {
 
+    const {usuarios} = useCursos();
 
     return (
-    <TouchableOpacity onPress={() => {navigation.navigate(direction)}}>
+    <TouchableOpacity onPress={() => {navigation.navigate('DetailCourse',{identificador:identificador})}}>
         <View style={styles.containerCard}>
         <View style={styles.viewImage}>
         </View>
         <View>
-            <Text style={styles.textTitle}>{name}</Text>
-            <Text style={styles.textDescription}>Aprende  utilzar el IDE mas usado para el desarrollo movil</Text>
+            <Text style={styles.textTitle}>{title} </Text>
+            <Text style={styles.textDescription}>{subtitle} </Text>
             <Text style={styles.textImparted}>Impartido por: 
-                <Text style={styles.textTeacher}> Marco Huitron</Text>
+            {
+                usuarios.map(usuario => {
+                    if(usuario.Id_Usuario === teacher){
+                        return ( <Text style={styles.textTeacher}> {usuario.Nombre} </Text>)
+                    }
+                })
+            }
             </Text>
             <View style={styles.viewPrice}>
-                <Text style={styles.textPrice}>$200.00 MXN</Text>
+                <Text style={styles.textPrice}>{price}</Text>
             </View>
         </View>
     </View>
     </TouchableOpacity>
   )
+
 }
 
 const styles = StyleSheet.create({
@@ -43,7 +52,7 @@ const styles = StyleSheet.create({
         fontSize:12
     },
     textTeacher:{
-        color:'gray',
+        color:'rgb(99 102 241)',
         fontWeight:'400',
         fontSize:12
     },
@@ -55,7 +64,7 @@ const styles = StyleSheet.create({
     color:'gray'
     },
     viewImage:{
-        backgroundColor:'#8578b0',
+        backgroundColor:'rgb(99 102 241)',
         borderRadius:2,
         height:100,
         marginBottom:2,

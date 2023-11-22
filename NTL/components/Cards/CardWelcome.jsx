@@ -32,9 +32,5 @@ const styles = StyleSheet.create({
         gap:5,
         width:350,
         justifyContent:'center'
-    },
-    textUser:{
-        color:'#8578b0',
-        fontWeight:'bold'
     }
 })

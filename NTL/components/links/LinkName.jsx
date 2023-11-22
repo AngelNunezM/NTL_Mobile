@@ -14,7 +14,7 @@ export default function LinkName({name, navigation, direction}) {
 
 const styles = StyleSheet.create({
     textLink:{
-        color:'#8578b0',
+        color:'rgb(99 102 241)',
         fontWeight:'600'
     },
     viewName:{

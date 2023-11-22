@@ -5,19 +5,26 @@ import CardWelcome from '../components/Cards/CardWelcome';
 import useCursos from '../hooks/useCursos';
 //resources needing
 import { Feather } from '@expo/vector-icons';
+import useAuth from '../hooks/useAuth';
 
 
 export default function Home({navigation}) {
   
+  
   const {cursos} = useCursos();
-  console.log(cursos)
+  const {authenticate} = useAuth();
+  
+  if(!authenticate){
+    return (navigation.navigate('Login'))
+  }
+  
   return (
       <View>
         <View style={styles.viewSearch}>
         <Feather name="search" size={22} color="black" />
           <TextInput placeholder='Search' style={styles.inputSearch}/>
           <TouchableOpacity style={styles.buttonFilter}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Buscar curso</Text>
+            <Text style={{color:'white', fontWeight:'bold'}}>Buscar</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -32,42 +39,44 @@ export default function Home({navigation}) {
             showsHorizontalScrollIndicator={false}
             style={styles.viewScrollHead}>
               {
-                cursos.map(curso => (
-                  <CourseCard
-                  key={curso.Id_Cursos}
-                  navigation={navigation}
-                  direction='DetailCourse'
-                  name={curso.Titulo}
-                  />
-                ))
+                cursos.map(curso => {
+                  if(curso.Nombre === 'Gratis'){
+                    return (
+                      <CourseCard
+                      key={curso.Id_Cursos}
+                      navigation={navigation}
+                      direction='DetailCourse'
+                      title={curso.Titulo}
+                      price={curso.Nombre}
+                      subtitle={curso.Subtitulo}
+                      teacher={curso.IdUsuario}
+                      identificador={curso.Id_Cursos}
+                      />
+                    )
+                  }
+                })
               }
             </ScrollView>
             <View >
               <Text style={styles.textAllCourses}>Todos los cursos</Text>
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
-              <CourseCardLong 
-              navigation={navigation}
-              direction='DetailCourse'
-              />
+              {
+                cursos.map(curso => {
+                  if(curso.Nombre != 'Gratis'){
+                    return (
+                      <CourseCardLong
+                      key={curso.Id_Cursos}
+                      navigation={navigation}
+                      direction='DetailCourse'
+                      title={curso.Titulo}
+                      price={curso.Nombre}
+                      subtitle={curso.Subtitulo}
+                      teacher={curso.IdUsuario}
+                      identificador={curso.Id_Cursos}
+                      />
+                    )
+                  }
+                })
+              }
             </View>
           </ScrollView>
         </View>
@@ -104,13 +113,13 @@ const styles = StyleSheet.create({
   },
   inputSearch:{
     width:'70%',
-    padding:10,
+    padding:7,
     borderRadius:5,
   },
   buttonFilter:{
     backgroundColor:'black',
-    padding:8,
-    paddingHorizontal:17, 
+    padding:10,
+    paddingHorizontal:25, 
     borderRadius:8
   }
 })

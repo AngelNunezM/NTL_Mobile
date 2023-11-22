@@ -1,24 +1,21 @@
-import axios from 'axios';
-import React from 'react'
+
+import React, { useState } from 'react'
 
 const AuthContext = React.createContext();
 
 
 const AuthProvider = ({children}) =>{
     
-    {/*
-const peticion = () =>{
-        axios.get("https://pokeapi.co/api/v2/pokemon/ditto")
-        .then(res =>{})
-        
-    } */}
+   const [authenticate, setAuthenticate] = useState(false)
     
     return(
         
         <AuthContext.Provider
             value={{
-                
+                authenticate
             }}
         >{children}</AuthContext.Provider>
     )
 }
+export{AuthProvider}
+export default AuthContext;

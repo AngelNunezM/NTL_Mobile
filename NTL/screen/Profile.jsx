@@ -34,7 +34,7 @@ export default function Profile({navigation}) {
 const styles = StyleSheet.create({
   viewPhoto:{
     padding:20,
-    backgroundColor:'#8578b0',
+    backgroundColor:'rgb(99 102 241)',
     borderRadius:160,
     width:100,
     height:100,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   textButton:{
     fontWeight:'bold',
-    color:'#8578b0',
+    color:'rgb(99 102 241)',
     fontSize:17,
     textAlign:'center'
     }

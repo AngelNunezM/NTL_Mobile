@@ -18,7 +18,7 @@ export default function TeacherProfile({navigation}) {
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Text style={{paddingHorizontal:10, fontWeight:'bold', padding:5, fontSize:18}}>Cursos Impartidos (27)  -</Text>
             <TouchableOpacity>
-              <Text style={{color:'#8578b0', fontWeight:'bold', fontSize:14}}>Ver todo</Text>
+              <Text style={{color:'rgb(99 102 241)', fontWeight:'bold', fontSize:14}}>Ver todo</Text>
             </TouchableOpacity>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
