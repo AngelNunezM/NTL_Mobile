@@ -3,7 +3,7 @@ import { TextInput, Text, View, StyleSheet } from 'react-native'
 
 export default function InputForm({text, place}) {
 
-  const [param, setParam] = useState();
+ 
   
   return (
         <View style={styles.textContainer}>

@@ -1,60 +1,88 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import CardHeaderTitle from '../../components/Cards/CardHeaderTitle';
 import FlatSection from '../../components/flatList/FlatSection';
+import useCursos from '../../hooks/useCursos';
+
+import { Feather } from '@expo/vector-icons'; 
 
 
 export default function DetailCourse({navigation, route}) {
 
-    const {ident, title, subtitle, price, teacher } = route.params
+    const { ident, title, subtitle, price, teacher, descripcion } = route.params
+    const { requerimientos, competencias, secciones, recursos } = useCursos()
+
     return (
     <View>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
-                <Text>{ident}</Text>
+            {
+                    recursos.map((recurso)=>{
+                        if(recurso.IdCurso == ident){
+                            return (<Image source={{uri: recurso.URL}}
+                            style={{width: 370, height: 195, borderRadius:5}}/>)
+                        }
+                    })
+                }
             </View>
             <View style={styles.containerCard}>
                 <CardHeaderTitle 
                 navigation={navigation} 
                 title={title} 
                 subtitle={subtitle}
-                price={price}/>
+                price={price}
+                teacher={teacher}
+                />
                 <View style={{marginBottom:20}}>
-                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}> Lo que aprenderas:</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}><Feather name="award" size={18} color="black" /> Lo que aprenderas:</Text>
                     <View>
-                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Instalacion de Android studio en cualquier entorno</Text>
-                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Utilizar buenas practicas en el desarrollo movil </Text>
-                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Aprende Kotlin y sus utilidades en el desarrollo</Text>
-                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Crear tu primer aplicacion movil para tu CV</Text>
-                        <Text style={{color:'rgb(99 102 241)', fontWeight:'bold', fontSize:15}}> Ver mas</Text>
+                        {
+                            competencias.map((competencia) => {
+                                if(competencia.IdCurso == ident){
+                                    return (
+                                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}><Feather name="check-square" size={15} color="gray"/> {competencia.Nombre}</Text>
+                                    )
+                                }
+                            })
+                        }
                     </View>
                 </View>
                 {/* section */}
                 <View style={{marginBottom:20}}>
-                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}>Contenido del curso:</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}><Feather name="clipboard" size={18} color="black" /> Contenido del curso:</Text>
                     <View style={styles.viewSection}>
-                        <FlatSection />
-                        <FlatSection />
-                        <FlatSection />
+                        {
+                            secciones.map((seccion) =>{
+                                if(seccion.IdCurso == ident){
+                                    return(
+                                        <FlatSection 
+                                        name={seccion.Nombre} />
+                                    )
+                                }
+                            })
+                        }
                     </View>
                 </View>
                 <View style={{marginBottom:20}}>
                     {/*Requisitos coding  */}
-                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}>Requisitos:</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}><Feather name="help-circle" size={18} color="black" /> Requisitos:</Text>
                     <View>
-                        <Text style={styles.textRequire}> - Fundamentos de programacion</Text>
-                        <Text style={styles.textRequire}> - Fundamentos de programacion</Text>
-                       
-                        <Text style={{color:'rgb(99 102 241)', fontWeight:'bold', fontSize:15}}> Ver mas</Text>  
+                        {
+                            requerimientos.map((requerimiento) => {
+                                if(requerimiento.IdCurso == ident){
+                                    return (
+                                        <Text style={styles.textRequire}><Feather name="hash" size={15} color="gray" /> {requerimiento.Nombre}</Text>
+                                    )
+                                }
+                            })
+                        }
                     </View>
                 </View>
                 <View style={{marginBottom:20}}>
                     {/*descripcion */}
-                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}>Descripcion:</Text>
+                    <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}><Feather name="info" size={18} color="black" /> Descripcion:</Text>
                     <View >
-                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima hic distinctio atque, dolorum accusamus earum eligendi fuga soluta perspiciatis amet rem maxime possimus doloribus aspernatur quaerat a excepturi quibusdam dolore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, ipsa eligendi est accusamus, et quia cupiditate modi tempora eos omnis laudantium earum sunt ad at sint placeat inventore. Exercitationem, atque...
-                        <Text style={{color:'rgb(99 102 241)', fontWeight:'bold', fontSize:15}}> Ver mas</Text>
-                        </Text>
+                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}> {descripcion}</Text>
                     </View>
                 </View>
             </View>
@@ -67,8 +95,6 @@ const styles = StyleSheet.create({
         height:200,
         margin:10,
         borderRadius:5,
-        borderWidth:1,
-        borderStyle:'dashed',
         justifyContent:'center',
         alignItems:'center'
     },

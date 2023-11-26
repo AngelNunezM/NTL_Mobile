@@ -7,11 +7,7 @@ export default function CardWelcome({navigation}) {
   return (
     <View style={styles.containerWelcome}>
         <Text style={styles.textBody}>Hola</Text>
-        <LinkName 
-        name="Angel Nuñez de Jesus Nuñez"
-        navigation={navigation}
-        direction='Profile'
-        />
+        <Text>Angel de Jesus Nuñez Moreno</Text>
     </View>
   )
 }

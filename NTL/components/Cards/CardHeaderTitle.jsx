@@ -3,24 +3,38 @@ import { StyleSheet, View, Text } from 'react-native'
 import ButtonPrimary from '../../components/buttons/ButtonPrimary';
 import LinkName from '../../components/links/LinkName';
 
+import { Feather } from '@expo/vector-icons';
 
-export default function CardHeaderTitle({navigation, title, subtitle, price}) {
+export default function CardHeaderTitle({navigation, title, subtitle, price, teacher}) {
   return (
     <>
-        <Text style={styles.textTitle}>{title}</Text>
+        <Text style={styles.textTitle}><Feather name="coffee" size={24} color="black" /> {title}</Text>
         <Text style={styles.textDescription}>{subtitle}</Text>
-        <View style={{flexDirection:'row'}}>
-            <Text style={styles.textMake}>Creado por</Text>
+        <View style={{flexDirection:'row', display:'flex'}}>
+            <Text style={styles.textMake}><Feather name="user" size={18} color="gray" /> Creado por</Text>
             <LinkName 
-            name="Marco Antonio"
+            teacher={teacher}
             navigation={navigation}
             direction='TeacherProfile'
             />
         </View>
         <View style={styles.containerPressPrice}>
             <View style={styles.viewPrice}>
-                <Text style={{fontSize:24, fontWeight:'bold'}}>{price} MXN </Text>
-                <Text style={{fontSize:18, color:'gray', textDecorationLine:'line-through'}}>399.00 MXN</Text>
+                {
+                    price==='Gratis'? 
+                    (
+                        <>
+                            <Text style={{fontSize:24, fontWeight:'bold'}}>{price}</Text>    
+                        </>
+                    )
+                    : 
+                    (
+                    <>
+                        <Text style={{fontSize:24, fontWeight:'bold'}}>{price} MXN </Text>
+                        <Text style={{fontSize:18, color:'gray', textDecorationLine:'line-through'}}>399.00 MXN</Text>
+                    </>
+                    )
+                } 
             </View>
             <View style={styles.button}>
                 <ButtonPrimary 

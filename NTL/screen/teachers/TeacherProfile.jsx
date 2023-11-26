@@ -1,14 +1,23 @@
 import React from 'react';
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import CourseCardLong from '../../components/Cards/CourseCardLong';
+import useCursos from '../../hooks/useCursos';
 
 
-export default function TeacherProfile({navigation}) {
+export default function TeacherProfile({navigation, route}) {
+  const {cursos, usuarios} = useCursos();
+  const { teacher} = route.params
   return (
     <View>
       <View>
         <View style={{alignItems:'center', marginTop:30, marginBottom:20}}>
-          <Text style={{fontSize:24, fontWeight:'bold', marginBottom:5}}>Marco Huitron</Text>
+          {
+            usuarios.map((usuario) => {
+              if(usuario.Id_Usuario == teacher){
+                return (<Text style={{fontSize:24, fontWeight:'bold', marginBottom:5}}>{usuario.Nombre} </Text>)
+              }
+            })
+          }
           <View style={styles.viewPhoto}>
             <Text>Perfil</Text>
           </View>
@@ -22,30 +31,26 @@ export default function TeacherProfile({navigation}) {
             </TouchableOpacity>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
-            <CourseCardLong 
-            navigation={navigation}
-            direction='DetailCourse'
-            />
+            {
+                cursos.map(curso => {
+                  if(curso.IdUsuario == teacher){
+                    return (
+                      <CourseCardLong
+                      key={curso.Id_Cursos}
+                      navigation={navigation}
+                      direction='DetailCourse'
+                      title={curso.Titulo}
+                      price={curso.Nombre}
+                      subtitle={curso.Subtitulo}
+                      teacher={curso.IdUsuario}
+                      identificador={curso.Id_Cursos}
+                      description={curso.Descripcion}
+                      students={curso.Total}
+                      />
+                    )
+                  }
+                })
+              }
           </ScrollView>
         </View>
       </View>

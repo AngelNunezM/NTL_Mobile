@@ -8,16 +8,17 @@ import { Feather } from '@expo/vector-icons';
 import useAuth from '../hooks/useAuth';
 
 
-export default function Home({navigation}) {
-  
+export default function Home({navigation}) { 
   
   const {cursos} = useCursos();
   const {authenticate} = useAuth();
   
+  
   if(!authenticate){
     return (navigation.navigate('Login'))
   }
-  
+
+
   return (
       <View>
         <View style={styles.viewSearch}>
@@ -50,7 +51,9 @@ export default function Home({navigation}) {
                       price={curso.Nombre}
                       subtitle={curso.Subtitulo}
                       teacher={curso.IdUsuario}
+                      description={curso.Descripcion}
                       identificador={curso.Id_Cursos}
+                      students={curso.Total}
                       />
                     )
                   }
@@ -72,6 +75,8 @@ export default function Home({navigation}) {
                       subtitle={curso.Subtitulo}
                       teacher={curso.IdUsuario}
                       identificador={curso.Id_Cursos}
+                      description={curso.Descripcion}
+                      students={curso.Total}
                       />
                     )
                   }
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:15,
     fontSize:18,
     fontWeight:'700',
-    marginTop:10
+    marginTop:10, 
   },
   viewSearch:{
     margin:15,

@@ -1,20 +1,41 @@
-import React from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import React,{ useState, useCallback } from 'react';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import LinkName from '../../components/links/LinkName';
+import YoutubePlayer from "react-native-youtube-iframe";
+
+import { Feather } from '@expo/vector-icons';
 
 export default function PlayCourse({navigation}) {
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
+
   return (
     <View>
       <View style={styles.viewFrame}>
-        <Text>Frame del video</Text>
+      <YoutubePlayer
+        height={300}
+        play={playing}
+        videoId={"iee2TATGMyI"}
+        onChangeState={onStateChange}
+      />
       </View>
       <View>
         <View style={styles.viewControl}>
           <TouchableOpacity style={styles.buttonControl}>
-            <Text style={{fontWeight:'bold'}}>⏮ Anterior</Text>
+            <Text style={{fontWeight:'bold'}}><Feather name="skip-back" size={15} color="black" /></Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonControl}>
-            <Text style={{fontWeight:'bold'}}>Siguiente ⏭</Text>
+            <Text style={{fontWeight:'bold'}}><Feather name="skip-forward" size={15} color="black" /> </Text>
           </TouchableOpacity>
         </View>
         <View style={{padding:10,}}>
@@ -70,8 +91,6 @@ export default function PlayCourse({navigation}) {
 const styles = StyleSheet.create({
   viewFrame:{
     height:200,
-    borderWidth:1,
-    borderStyle:'dashed',
     justifyContent:'center',
     alignItems:'center'
   },

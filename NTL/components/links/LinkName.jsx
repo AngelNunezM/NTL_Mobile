@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, Text, StyleSheet } from 'react-native'
+import useCursos from '../../hooks/useCursos'
+import axios from 'axios'
 
-export default function LinkName({name, navigation, direction}) {
+export default function LinkName({teacher, navigation, direction}) {
+
+  const {usuarios} = useCursos()
   return (
     <Pressable 
     style={styles.viewName}
-    onPress={() => {navigation.navigate(direction)}}
+    onPress={() => {
+      navigation.navigate(direction, 
+      {
+      teacher:teacher,
+      }
+    )
+    
+  }}
     >
-        <Text style={styles.textLink}> {name}</Text>
+    {
+      usuarios.map((usuario) => {
+        if(usuario.Id_Usuario == teacher){
+          return ( <Text style={styles.textLink}> {usuario.Nombre} </Text>
+          )
+        }
+      })
+    }
     </Pressable>
   )
 }
@@ -15,7 +33,7 @@ export default function LinkName({name, navigation, direction}) {
 const styles = StyleSheet.create({
     textLink:{
         color:'rgb(99 102 241)',
-        fontWeight:'600'
+        fontWeight:'700'
     },
     viewName:{
     }

@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View} from 'react-native'
 
-export default function FlatSection({}) {
+import { Feather } from '@expo/vector-icons'; 
+
+export default function FlatSection({name}) {
   const [openChapter, setOpenChapter] = useState('none');
-  console.log(openChapter)
+
   const handleOpen = () => {
    
   }
   return (
     <TouchableOpacity style={styles.buttonSection} onPress={() => handleOpen()}>
-        <Text style={{fontWeight:'700'}}>Instalacion de Android Studio</Text>
+        <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} >
+          <Text style={{fontWeight:'700'}}>{name}</Text>
+          <Feather name="chevron-down" size={18} color="black" />
+        </View>
         <View style={{display:openChapter}}>
-          <Text>Capitulo</Text>
-          <Text>Capitulo</Text>
-          <Text>Capitulo</Text>
-          <Text>Capitulo</Text>
+
         </View>
     </TouchableOpacity>
   )

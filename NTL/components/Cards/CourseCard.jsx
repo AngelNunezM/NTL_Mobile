@@ -1,10 +1,12 @@
-import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import useCursos from '../../hooks/useCursos';
 
-export default function CourseCard({navigation, direction, title, subtitle, teacher, price, identificador}) {
+import { Feather } from '@expo/vector-icons';
 
-    const {usuarios} = useCursos();
+export default function CourseCard({navigation, direction, title, subtitle, teacher, price, identificador, description, students}) {
+
+    const {usuarios, recursos} = useCursos();
 
     return (
     <TouchableOpacity onPress={() => {navigation.navigate(direction,
@@ -13,29 +15,41 @@ export default function CourseCard({navigation, direction, title, subtitle, teac
         title:title,
         price:price,
         subtitle:subtitle,
-        teacher:teacher
+        teacher:teacher,
+        descripcion:description
     }
     )}}>
         <View style={styles.containerCard}>
-        <View style={styles.viewImage}>
-        </View>
-        <View>
-            <Text style={styles.textTitle}>{title} </Text>
-            <Text style={styles.textDescription}>{subtitle} </Text>
-            <Text style={styles.textImparted}>Impartido por: 
-            {
-                usuarios.map(usuario => {
-                    if(usuario.Id_Usuario === teacher){
-                        return ( <Text style={styles.textTeacher}> {usuario.Nombre} </Text>)
+            <View style={styles.viewImage}>
+                {
+                    recursos.map((recurso)=>{
+                        if(recurso.IdCurso == identificador){
+                            return (<Image source={{uri: recurso.URL}}
+                            style={{width: 170, height: 100, borderRadius:5}}/>)
+                        }
+                    })
+                }
+            </View>
+            <View style={{display:'flex', flexDirection:'column', height:130, justifyContent:'space-between'}} >
+                <View>
+                    <Text style={styles.textTitle}>{title}</Text>
+                    <Text style={styles.textDescription}>{subtitle}</Text>
+                    <Text style={styles.textImparted}>Impartido por: 
+                    {
+                        usuarios.map(usuario => {
+                            if(usuario.Id_Usuario === teacher){
+                                return ( <Text style={styles.textTeacher}> {usuario.Nombre}</Text>)
+                            }
+                        })
                     }
-                })
-            }
-            </Text>
-            <View style={styles.viewPrice}>
-                <Text style={styles.textPrice}>{price}</Text>
+                    </Text>
+                </View>
+                <View style={styles.viewPrice}>
+                    <Text style={styles.textPrice}>{price}</Text>
+                    <Text style={styles.textPrice}>{students} <Feather name="users" size={15} color="black" /></Text>
+                </View>
             </View>
         </View>
-    </View>
     </TouchableOpacity>
   )
 
@@ -45,7 +59,7 @@ const styles = StyleSheet.create({
     containerCard:{
         padding:15,
         borderRadius:5,
-        width:200
+        width:200,
     },
     viewPrice:{
         flexDirection:'row',
@@ -61,8 +75,8 @@ const styles = StyleSheet.create({
     },
     textTeacher:{
         color:'rgb(99 102 241)',
-        fontWeight:'400',
-        fontSize:12
+        fontWeight:'700',
+        fontSize:12,
     },
     textPrice:{
         fontWeight:'bold'
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
     },
     viewImage:{
         backgroundColor:'rgb(99 102 241)',
-        borderRadius:2,
+        borderRadius:100,
         height:100,
         marginBottom:2,
         borderRadius:3
