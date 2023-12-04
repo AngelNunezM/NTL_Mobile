@@ -1,32 +1,37 @@
-import React, { useState } from 'react'
-import { Pressable, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import useCursos from '../../hooks/useCursos'
-import axios from 'axios'
+import useAuth from '../../hooks/useAuth'
+
+
 
 export default function LinkName({teacher, navigation, direction}) {
 
   const {usuarios} = useCursos()
+  const {getProfileprof} = useAuth()
+ 
   return (
-    <Pressable 
+    <TouchableOpacity 
     style={styles.viewName}
-    onPress={() => {
-      navigation.navigate(direction, 
-      {
-      teacher:teacher,
+    onPress={ () => {
+      if(getProfileprof.length > 0){
+        navigation.navigate(direction, 
+          {
+          teacher:teacher,
+          })
       }
-    )
-    
+      return
   }}
     >
     {
       usuarios.map((usuario) => {
         if(usuario.Id_Usuario == teacher){
-          return ( <Text style={styles.textLink}> {usuario.Nombre} </Text>
+          return ( <Text key={usuario.Id_Usuario} style={styles.textLink}> {usuario.Nombre} </Text>
           )
         }
       })
     }
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

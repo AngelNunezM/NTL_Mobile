@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, } from 'react-native';
 import CardHeaderTitle from '../../components/Cards/CardHeaderTitle';
 import FlatSection from '../../components/flatList/FlatSection';
 import useCursos from '../../hooks/useCursos';
@@ -11,7 +11,7 @@ export default function DetailCourse({navigation, route}) {
 
     const { ident, title, subtitle, price, teacher, descripcion } = route.params
     const { requerimientos, competencias, secciones, recursos } = useCursos()
-
+    
     return (
     <View>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -19,7 +19,7 @@ export default function DetailCourse({navigation, route}) {
             {
                     recursos.map((recurso)=>{
                         if(recurso.IdCurso == ident){
-                            return (<Image source={{uri: recurso.URL}}
+                            return (<Image key={recurso.Id_Recurso} source={{uri: recurso.URL}}
                             style={{width: 370, height: 195, borderRadius:5}}/>)
                         }
                     })
@@ -32,6 +32,7 @@ export default function DetailCourse({navigation, route}) {
                 subtitle={subtitle}
                 price={price}
                 teacher={teacher}
+                ident={ident}
                 />
                 <View style={{marginBottom:20}}>
                     <Text style={{fontSize:18, fontWeight:'bold', marginBottom:7}}><Feather name="award" size={18} color="black" /> Lo que aprenderas:</Text>
@@ -40,7 +41,7 @@ export default function DetailCourse({navigation, route}) {
                             competencias.map((competencia) => {
                                 if(competencia.IdCurso == ident){
                                     return (
-                                        <Text style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}><Feather name="check-square" size={15} color="gray"/> {competencia.Nombre}</Text>
+                                        <Text key={competencia.Id_Competencia} style={{color:'gray', fontWeight:'400', fontSize:15, marginBottom:2}}><Feather name="check-square" size={15} color="gray"/> {competencia.Nombre}</Text>
                                     )
                                 }
                             })
@@ -56,7 +57,10 @@ export default function DetailCourse({navigation, route}) {
                                 if(seccion.IdCurso == ident){
                                     return(
                                         <FlatSection 
-                                        name={seccion.Nombre} />
+                                        key={seccion.Id_Secciones}
+                                        ident={ident}
+                                        name={seccion.Nombre} 
+                                        section={seccion.Id_Secciones} />
                                     )
                                 }
                             })
@@ -71,7 +75,7 @@ export default function DetailCourse({navigation, route}) {
                             requerimientos.map((requerimiento) => {
                                 if(requerimiento.IdCurso == ident){
                                     return (
-                                        <Text style={styles.textRequire}><Feather name="hash" size={15} color="gray" /> {requerimiento.Nombre}</Text>
+                                        <Text key={requerimiento.Id_Requerimientos} style={styles.textRequire}><Feather name="hash" size={15} color="gray" /> {requerimiento.Nombre}</Text>
                                     )
                                 }
                             })

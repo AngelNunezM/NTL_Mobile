@@ -1,50 +1,53 @@
-import React,{ useState, useCallback } from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import LinkName from '../../components/links/LinkName';
-import YoutubePlayer from "react-native-youtube-iframe";
 
 import { Feather } from '@expo/vector-icons';
+import useCursos from "../../hooks/useCursos";
+import YoutubeIframe from "react-native-youtube-iframe";
 
-export default function PlayCourse({navigation}) {
-  const [playing, setPlaying] = useState(false);
+export default function PlayCourse({navigation, route}) {
+  const {ident, teacher} = route.params;
+  const {lecciones, secciones, usuarios, cursos, capitulos, setCapitulos} = useCursos()
+  const [id, setId] = useState(0)
 
-  const onStateChange = useCallback((state) => {
-    if (state === "ended") {
-      setPlaying(false);
-      Alert.alert("video has finished playing!");
+  const handlePrev = () =>{
+    if(id == 0){
+      setId(0);
+    }else{
+      setId(id-1);
     }
-  }, []);
-
-  const togglePlaying = useCallback(() => {
-    setPlaying((prev) => !prev);
-  }, []);
+  }
+  const handleNext = () =>{
+    setId(id+1);
+  }
 
   return (
     <View>
       <View style={styles.viewFrame}>
-      <YoutubePlayer
-        height={300}
-        play={playing}
-        videoId={"iee2TATGMyI"}
-        onChangeState={onStateChange}
-      />
+        <YoutubeIframe
+        height={250}
+        width={390}
+        play={true}
+        videoId={capitulos[id].Fragmento}
+        />      
       </View>
       <View>
         <View style={styles.viewControl}>
-          <TouchableOpacity style={styles.buttonControl}>
+          
+          <TouchableOpacity style={styles.buttonControl} onPress={()=>{handlePrev()}}>
             <Text style={{fontWeight:'bold'}}><Feather name="skip-back" size={15} color="black" /></Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonControl}>
-            <Text style={{fontWeight:'bold'}}><Feather name="skip-forward" size={15} color="black" /> </Text>
+            <Text style={{fontWeight:'bold'}} onPress={() => {handleNext()}}><Feather name="skip-forward" size={15} color="black" /> </Text>
           </TouchableOpacity>
         </View>
         <View style={{padding:10,}}>
-          <Text style={{color:'gray', fontWeight:'bold'}}>Seccion 1 - Instalacion de Android studio</Text>
-          <Text style={styles.textTitle}>Descargando el SDK de Android Studio</Text>
+          <Text style={{fontSize:21}}>{capitulos[id].Nombre} </Text>
           <View style={{flexDirection:'row'}}>
-            <Text style={{color:'gray', marginBottom:10}}>Impartido por</Text>
+            <Text style={{color:'gray'}}>Impartido por: </Text>
             <LinkName 
-            name='Marco Huitron'
+            teacher={teacher}
             navigation={navigation}
             direction='TeacherProfile'
             />
@@ -54,32 +57,29 @@ export default function PlayCourse({navigation}) {
               <Text style={styles.textSubtitle}>Clases</Text>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text style={styles.textSection}>Seccion 1 - Instalacion de Android studio (3)</Text>
-              <View>
-                <Text style={styles.textChapter}>▶ Descargando el SDK de Android Studio</Text>
-                <Text style={styles.textChapter}>2. Instalacion del SDK 27</Text>
-                <Text style={styles.textChapter}>3. Configuracion de las variables de entorno</Text>
-              </View>
-              <Text style={styles.textSection}>Seccion 2 - Conceptos Basicos (4)</Text>
-              <View>
-                <Text style={styles.textChapter}>4. Mi primer aplicacion con JAVA</Text>
-                <Text style={styles.textChapter}>5. Variables y tipos de datos</Text>
-                <Text style={styles.textChapter}>6. Estructuras de control (If y Switch)</Text>
-                <Text style={styles.textChapter}>7. Estructuras de control (for, white y do while)</Text>
-              </View>
-              <Text style={styles.textSection}>Seccion 1 - Instalacion de Android studio (3)</Text>
-              <View>
-                <Text style={styles.textChapter}>▶ Descargando el SDK de Android Studio</Text>
-                <Text style={styles.textChapter}>2. Instalacion del SDK 27</Text>
-                <Text style={styles.textChapter}>3. Configuracion de las variables de entorno</Text>
-              </View>
-              <Text style={styles.textSection}>Seccion 2 - Conceptos Basicos (4)</Text>
-              <View>
-                <Text style={styles.textChapter}>4. Mi primer aplicacion con JAVA</Text>
-                <Text style={styles.textChapter}>5. Variables y tipos de datos</Text>
-                <Text style={styles.textChapter}>6. Estructuras de control (If y Switch)</Text>
-                <Text style={styles.textChapter}>7. Estructuras de control (for, white y do while)</Text>
-              </View>
+            
+              {
+                secciones.map((seccion) => {
+                  if(seccion.IdCurso == ident){
+                  return (<>
+                      <Text key={seccion.Id_Secciones} style={styles.textSection}>{seccion.Nombre}</Text>
+                      <View>
+                        {
+                          lecciones.map((leccion)=>{
+                            if(leccion.Id_Secciones == seccion.Id_Secciones){
+                              return (
+                                <Text key={leccion.Id_Lecciones} style={styles.textChapter}>{leccion.Nombre}</Text>
+                              )
+                            }
+                          })
+                        }
+                      </View>
+                      
+                    </>)
+                  }
+                })
+              } 
+              
             </ScrollView>
           </View>
         </View>
@@ -90,6 +90,7 @@ export default function PlayCourse({navigation}) {
 
 const styles = StyleSheet.create({
   viewFrame:{
+    marginTop:25,
     height:200,
     justifyContent:'center',
     alignItems:'center'

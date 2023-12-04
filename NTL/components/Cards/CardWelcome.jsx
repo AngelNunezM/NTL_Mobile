@@ -2,12 +2,15 @@ import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { StyleSheet } from 'react-native'
 import LinkName from '../links/LinkName'
+import useAuth from '../../hooks/useAuth'
 
 export default function CardWelcome({navigation}) {
+  const {name} = useAuth();
   return (
     <View style={styles.containerWelcome}>
         <Text style={styles.textBody}>Hola</Text>
-        <Text>Angel de Jesus Nuñez Moreno</Text>
+        <Text style={{fontWeight:'700', color:'rgb(99 102 241)'}}>{name} </Text>
+        <Text style={styles.textBody}>Bienvenid@</Text>
     </View>
   )
 }

@@ -1,23 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import CourseCardLong from '../../components/Cards/CourseCardLong';
+import useAuth from '../../hooks/useAuth';
+import useCursos from '../../hooks/useCursos';
 
 
-export default function MyCourse({navigation,}) {
+export default function MyCourse({navigation}) {
+  const {idUser} = useAuth();
+  const {cursos, cursoUsuario} = useCursos();
+ 
+
   return (
     <View>
       <Text style={styles.textTitle}>Todos mis cursos</Text>
       <ScrollView style={{marginBottom:50}}>
-        <CourseCardLong
-        navigation={navigation}
-        direction={'PlayCourse'}
-        price='Matriculado'
-        />
+      {
+        cursoUsuario.map((cursoUser) => {
+          if(cursoUser.IdUsuario == idUser){
+            return  cursos.map((curso) => {
+              if(cursoUser.IdCurso == curso.Id_Cursos){
+                return (
+                  <CourseCardLong
+                  key={curso.Id_Cursos}
+                  navigation={navigation}
+                  direction={'PlayCourse'}
+                  title={curso.Titulo}
+                  price={curso.Nombre}
+                  subtitle={curso.Subtitulo}
+                  teacher={curso.IdUsuario}
+                  description={curso.Descripcion}
+                  identificador={curso.Id_Cursos}
+                  students={curso.Total}/>
+                ) 
+              }
+            })
+          }     
+        })
+      }
       </ScrollView>
     </View>
   )
 }
-
+/**/
 const styles = StyleSheet.create({
   textTitle:{
     fontSize:18, 

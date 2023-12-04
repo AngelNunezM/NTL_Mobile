@@ -7,13 +7,15 @@ export default function HomeAuthView({navigation}) {
   return (
         <View style={styles.container}>
             <Image 
-            source={require('../../assets/logo1.png')}
-            style={styles.imagestyle}/>
+            source={require('../../assets/phone.png')}
+            style={{width:400, height:400}}
+            />
+            <Text style={{fontWeight:'500', textAlign:'center', fontSize:28}}>Aprendizaje automatizado al alcanze de tu mano</Text>
+            <Text style={{fontWeight:'300', textAlign:'center', fontSize:14}}>Inicia sesion para acceder a todos nuestros cursos, si no tienes cuenta registrate!</Text>
             <View style={styles.buttonContainer}>
                 <ButtonPrimary navigation={navigation} direction={'Login'} text='Iniciar sesion'/>
                 <ButtonSecondary navigation={navigation} direction={'Register'} text='Registrarse'/>
             </View> 
-            <Text style={{color:'gray', fontWeight:'300', textAlign:'center'}}>NTL Education v1.0</Text>
         </View>
   )
 };
@@ -22,16 +24,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    imagestyle: {
-        width: 150, 
-        height:150, 
+        backgroundColor: '#f0f0f0'
     },
     buttonContainer: {
         width: '80%',
-        marginTop: 20,
         alignItems:'center',
-        paddingVertical:20,
         flexDirection: 'column',
     },
   }

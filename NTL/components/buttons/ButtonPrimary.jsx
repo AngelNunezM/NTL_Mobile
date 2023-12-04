@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
-export default function ButtonPrimary({navigation, direction, text}) {
+export default function ButtonPrimary({navigation, direction, text, ident = ""}) {
   return (
         <TouchableOpacity
-        onPress={() => {navigation.navigate(direction)}}
+        onPress={() => {{navigation.navigate(direction)}}}
         style={styles.button}>
             <Text style={styles.textButton}>{text}</Text>
         </TouchableOpacity>

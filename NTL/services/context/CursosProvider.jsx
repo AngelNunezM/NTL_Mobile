@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const CursoContext = React.createContext();
 
 const CursosProvider = ({children}) => {
-    const baseUrl = 'http://192.168.20.107:9000';
+    const baseUrl = 'http://192.168.137.152:9000';
     const [cursos, setCursos] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
     const [secciones, setSecciones] = useState([]);
@@ -12,11 +13,20 @@ const CursosProvider = ({children}) => {
     const [competencias, setCompetencias] = useState([]);
     const [requerimientos, setRequerimientos] = useState([]);
     const [recursos, setRecursos] = useState([]);
-    
+    const [cursoUsuario, setCursoUsuario] = useState([]);
+    const [capitulos, setCapitulos] = useState([])
+
     const getCursos = () => {
         axios.get(baseUrl+'/api/Cursos')
         .then((response) => {setCursos(response.data)})       
     }
+
+    const getCursoUsuarios = () => {
+        axios.get(baseUrl+'/api/CursoUsuarios')
+        .then((response) => {setCursoUsuario(response.data)})       
+    }
+    
+
     const getUsuarios = () => {
         axios.get(baseUrl+'/api/Usuarios')
         .then((response) => {setUsuarios(response.data)})       
@@ -43,6 +53,8 @@ const CursosProvider = ({children}) => {
         .then((response) => {setRecursos(response.data)})       
     } 
 
+   
+
     useEffect(() => {
         getCursos()
         getUsuarios()
@@ -51,6 +63,7 @@ const CursosProvider = ({children}) => {
         getLecciones()
         getSecciones()
         getRecursos()
+        getCursoUsuarios()
     },[])
     
     return(
@@ -64,7 +77,10 @@ const CursosProvider = ({children}) => {
                competencias,
                requerimientos,
                recursos,
-               baseUrl
+               baseUrl,
+               cursoUsuario,
+               capitulos,
+               setCapitulos
             }
         }
         >{children}</CursoContext.Provider>

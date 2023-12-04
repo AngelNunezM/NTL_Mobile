@@ -22,7 +22,7 @@ export default function CourseCardLong({navigation, direction, price, subtitle, 
             {
                     recursos.map((recurso)=>{
                         if(recurso.IdCurso == identificador){
-                            return (<Image source={{uri: recurso.URL}}
+                            return (<Image key={recurso.Id_Recurso} source={{uri: recurso.URL}}
                             style={{width: 100, height: 100, borderRadius:5}}/>)
                         }
                     })
@@ -35,7 +35,7 @@ export default function CourseCardLong({navigation, direction, price, subtitle, 
                 {
                         usuarios.map(usuario => {
                             if(usuario.Id_Usuario === teacher){
-                                return ( <Text style={styles.textTeacher}> {usuario.Nombre}</Text>)
+                                return ( <Text key={usuario.Id_Usuario} style={styles.textTeacher}> {usuario.Nombre}</Text>)
                             }
                         })
                     }

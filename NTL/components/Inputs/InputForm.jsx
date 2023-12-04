@@ -3,8 +3,6 @@ import { TextInput, Text, View, StyleSheet } from 'react-native'
 
 export default function InputForm({text, place}) {
 
- 
-  
   return (
         <View style={styles.textContainer}>
             <Text style={styles.text1}>{text}</Text>
@@ -25,7 +23,7 @@ const styles = StyleSheet.create({
         padding:10,
         paddingHorizontal:15,
         backgroundColor:'#fff',
-        borderWidth: 1,
+        borderWidth: .5,
         borderRadius:7,
         width:'100%',
         marginTop:5,

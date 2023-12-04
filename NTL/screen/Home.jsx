@@ -21,13 +21,6 @@ export default function Home({navigation}) {
 
   return (
       <View>
-        <View style={styles.viewSearch}>
-        <Feather name="search" size={22} color="black" />
-          <TextInput placeholder='Search' style={styles.inputSearch}/>
-          <TouchableOpacity style={styles.buttonFilter}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Buscar</Text>
-          </TouchableOpacity>
-        </View>
         <View>
           <ScrollView 
           style={styles.scrollPrincipal}
@@ -41,7 +34,7 @@ export default function Home({navigation}) {
             style={styles.viewScrollHead}>
               {
                 cursos.map(curso => {
-                  if(curso.Nombre === 'Gratis'){
+                  if(curso.Nombre === 'Gratis' && curso.Estatus =='3'){
                     return (
                       <CourseCard
                       key={curso.Id_Cursos}
@@ -64,7 +57,7 @@ export default function Home({navigation}) {
               <Text style={styles.textAllCourses}>Todos los cursos</Text>
               {
                 cursos.map(curso => {
-                  if(curso.Nombre != 'Gratis'){
+                  if(curso.Nombre != 'Gratis' && curso.Estatus =='3'){
                     return (
                       <CourseCardLong
                       key={curso.Id_Cursos}
@@ -93,7 +86,7 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   scrollPrincipal:{
     marginBottom:150,
-    height:640
+    height:714
   },
   textBody:{
     paddingHorizontal:15,

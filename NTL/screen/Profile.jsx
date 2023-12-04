@@ -1,14 +1,17 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity , Image} from 'react-native'
+import useAuth from '../hooks/useAuth'
 
 export default function Profile({navigation}) {
+  const {handleLogOut, name, email, profileTeacher} = useAuth();
+
   return (
     <View style={{height:690, justifyContent:'space-between'}}>
       <View>
         <View style={{alignItems:'center', padding:30}}>
-          <Text style={styles.viewPhoto}></Text>
-          <Text style={{fontSize:22, fontWeight:'bold'}}>Angel de Jesus Nuñez Moreno</Text>
-          <Text style={{fontSize:14, color:'gray'}}>192310938@NTLEducation.com</Text>
+          <Image source={{uri:profileTeacher[0].photoPerfil}} width={100} height={100} borderRadius={160}/>
+          <Text style={{fontSize:22, fontWeight:'bold'}}>{name}</Text>
+          <Text style={{fontSize:14, color:'gray'}}>{email}</Text>
         </View>
         <View>
           <Text style={{fontSize:14, color:'gray', fontWeight:'bold', padding:15}}>Configuracion de la cuenta</Text>
@@ -24,7 +27,10 @@ export default function Profile({navigation}) {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => {navigation.navigate('Login')}}>
+      <TouchableOpacity onPress={() => {
+        handleLogOut();
+        navigation.navigate('Login')
+        }}>
         <Text style={styles.textButton}>Cerrar sesion</Text>
       </TouchableOpacity>
       <Text style={{color:'gray', fontWeight:'300', textAlign:'center', }}>NTL Education v1.0</Text>
